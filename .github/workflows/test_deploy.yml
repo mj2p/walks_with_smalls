@@ -111,6 +111,8 @@ jobs:
           port: ${{ secrets.PORT }}
           script_stop: true
           script: |
+            # login to dockerhub
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
             # pull the new container
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web
             # reload the app
