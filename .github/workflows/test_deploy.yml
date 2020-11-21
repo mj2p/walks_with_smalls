@@ -58,6 +58,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: github_actions
+          PYTHON_PATH: walks_with_smalls
 
       - name: upload coverage report to codecov
         uses: codecov/codecov-action@v1
