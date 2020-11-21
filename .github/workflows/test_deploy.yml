@@ -101,9 +101,9 @@ jobs:
         run: |
           # this assumes that .config/.env.prod is already on the server
           # copy compose files
-          scp docker-compose.yml ${{ DOCKER_HOST }}:${{ DOCKER_HOST_PATH }}
-          scp docker-compose.prod.yml ${{ DOCKER_HOST }}:${{ DOCKER_HOST_PATH }}
+          scp docker-compose.yml ${{ secrets.DOCKER_HOST }}:${{ secrets.DOCKER_HOST_PATH }}
+          scp docker-compose.prod.yml ${{ secrets.DOCKER_HOST }}:${{ secrets.DOCKER_HOST_PATH }}
           # run commands to pull and restart the web container
-          ssh -t ${{ DOCKER_HOST }} "docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web"
-          ssh -t ${{ DOCKER_HOST }} "docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web"
+          ssh -t ${{ secrets.DOCKER_HOST }} "docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web"
+          ssh -t ${{ secrets.DOCKER_HOST }} "docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web"
 
