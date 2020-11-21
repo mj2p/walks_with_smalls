@@ -1,0 +1,103 @@
+{% load widget_tweaks %}
+
+<!--suppress XmlInvalidId -->
+<form method="post" action="{% url 'search' %}">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="row mb-3 mt-3">
+        <div class="col-sm">
+            <div class="card" id="search-form">
+                <div class="card-header" id="search-form-header">
+                    <div class="row">
+                        <div class="col-sm">
+                            <span class="lead">Find a walk</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm mb-2">
+                        {% include 'walks/fragments/messages.html' %}
+                    </div>
+                    <div class="form-row">
+                        <div class="col-sm-4">
+                            <div class="form-check">
+                                {% if form.use_current_location.errors %}
+                                    {% render_field form.use_current_location class+="form-check-input is-invalid" %}
+                                {% else %}
+                                    {% render_field form.use_current_location class+="form-check-input" %}
+                                {% endif %}
+                                <label class="form-check-label text-nowrap" for="{{ form.use_current_location.id_for_label }}">Use your current location</label>
+                            </div>
+                            <div class="invalid-feedback">
+                                {{ form.use_current_location.errors }}
+                            </div>
+                            {% if form.use_current_location.help_text %}
+                                <small class="form-text">{{ form.use_current_location.help_text|safe }}</small>
+                            {% endif %}
+
+                            {% if form.postcode.errors %}
+                                {% render_field form.postcode class+="form-control is-invalid" placeholder="Post code" %}
+                            {% else %}
+                                {% render_field form.postcode class+="form-control" placeholder="Post code" %}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.postcode.errors }}
+                            </div>
+                            {% if form.postcode.help_text %}
+                                <small class="form-text">{{ form.postcode.help_text|safe }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-3">
+                            {% if form.search_radius.errors %}
+                                {% render_field form.search_radius class+="form-control mt-4 is-invalid" placeholder="Search Distance (Miles)" %}
+                            {% else %}
+                                {% render_field form.search_radius class+="form-control mt-4" placeholder="Search Distance (Miles)" %}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.search_radius.errors }}
+                            </div>
+                            {% if form.search_radius.help_text %}
+                                <small class="form-text">{{ form.search_radius.help_text|safe }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-3">
+                            {% if form.maximum_length.errors %}
+                                {% render_field form.maximum_length class+="form-control mt-4 is-invalid" placeholder="Maximum walk length (Miles)" %}
+                            {% else %}
+                                {% render_field form.maximum_length class+="form-control mt-4" placeholder="Maximum walk length (Miles)" %}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.maximum_length.errors }}
+                            </div>
+                            {% if form.maximum_length.help_text %}
+                                <small class="form-text">{{ form.maximum_length.help_text|safe }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-2 text-center">
+                            <button class="btn btn-primary mt-4" type="submit">Search</button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-row card-deck attribute-deck">
+                        {% for field in form %}
+                            {% if field.label|lower in attributes|lower %}
+                                <div class="col-sm card card-body attribute-body">
+                                    <div class="form-check">
+                                        {% render_field field class+="form-check-input" %}
+                                        <label class="form-check-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        {{ field.errors }}
+                                    </div>
+                                    {% if field.help_text %}
+                                        <small class="form-text">{{ field.help_text|safe }}</small>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

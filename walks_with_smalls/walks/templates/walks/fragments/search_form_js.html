@@ -1,0 +1,33 @@
+<script>
+    $(function () {
+        // initial state of postcode field based on "use current location" checkbox
+        if($('#{{ form.use_current_location.id_for_label }}').is(':checked')) {
+            $('#{{ form.postcode.id_for_label }}').prop("disabled", true);
+        } else {
+            $('#{{ form.postcode.id_for_label }}').prop("disabled", false);
+        }
+
+        // if the checkbox gets clicked by the user, get and send the location to the backend
+        // also enable/disable the postcode field
+        $('#{{ form.use_current_location.id_for_label }}').change(function() {
+            if(this.checked) {
+                $('#{{ form.postcode.id_for_label }}').prop("disabled", true);
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(submitPosition);
+                };
+            } else {
+                $('#{{ form.postcode.id_for_label }}').prop("disabled", false);
+            }
+        })
+    });
+
+    function submitPosition(position) {
+        $.post(
+            "{% url 'get-user-location' %}",
+            {
+                lat: position.coords.latitude,
+                long: position.coords.longitude
+            }
+        );
+    }
+</script>

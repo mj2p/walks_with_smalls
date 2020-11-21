@@ -1,0 +1,42 @@
+{% load static %}
+
+<div class="card border-light list-walk">
+    <a href="{% url 'walk-detail' username=walk.submitter.username slug=walk.slug %}" class="walk-header">
+        <div class="card-header d-flex justify-content-between align-items-stretch">
+            <span class="card-title lead">{{ walk.name | title }}</span>
+            {% if walk.distance %}
+                <span class="small">{{ walk.distance.mi|floatformat }} mile{{ walk.distance.mi|floatformat|pluralize }} away</span>
+            {% endif %}
+        </div>
+    </a>
+    <div class="card-body">
+        <p class="lead text-muted">{{ walk.route_length|floatformat:2 }} mile{{ walk.route_distance|floatformat:2|pluralize }}</p>
+        <p class="small">{{ walk.road }}, {{ walk.county }}, {{ walk.postcode }}</p>
+        <p class="text-left">
+            {{ walk.description|truncatewords:15 }}
+        </p>
+        <a href="{% url 'walk-detail' username=walk.submitter.username slug=walk.slug %}" class="btn btn-secondary btn-sm ml-3">More</a>
+        <hr />
+        <div class="row">
+            <div class="col m-2 card-deck attribute-deck">
+                {% for attribute in walk.attributes.all %}
+                    <span class="card card-body p-2 small attribute">{{ attribute.attribute }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-between align-items-center list-walk-footer">
+        <div class="walk-links">
+            <a href="https://www.google.com/maps/walk/{{ walk.location.1 }},{{ walk.location.0 }}" class="card-link" target="_blank">
+                <span data-toggle="tooltip" title="Open in Google Maps">
+                    <img src="{% static 'walks_with_smalls/images/google-maps.png' %}" width="16px" height="20px"/>
+                </span>
+            </a>
+            {% if walk.what3words %}
+                <a href="https://what3words.com/{{ walk.what3words }}" class="card-link small" target="_blank">
+                    <span class="w3w-slashes" data-toggle="tooltip" title="Open in What3Words {{ walk.what3words }}">///</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

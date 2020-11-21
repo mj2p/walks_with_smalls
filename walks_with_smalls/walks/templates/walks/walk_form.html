@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% if walk.pk %}
+        Edit {{ walk.name }}
+    {% else %}
+        Add a Walk
+    {% endif %}
+{% endblock %}
+
+{% block headjs %}
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <!--suppress XmlInvalidId -->
+    <div class="row mb-5">
+        <div class="col-sm-10 offset-sm-1 mt-3 p-2 form-container">
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col mt-2">
+                        <h2>
+                            {% if walk.pk %}
+                                Edit - {{ walk.name|title }}
+                            {% else %}
+                                Add a Walk
+                            {% endif %}
+                        </h2>
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger mb-0">
+                                {{ error }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-4 mt-3">
+                        {% if form.name.errors %}
+                            {% render_field form.name class+="form-control is-invalid" placeholder="Name" %}
+                        {% else %}
+                            {% render_field form.name class+="form-control" placeholder="Name" %}
+                        {% endif %}
+                        <div class="invalid-feedback">
+                            {{ form.name.errors }}
+                        </div>
+                        {% if form.name.help_text %}
+                            <small class="form-text">{{ form.name.help_text|linebreaksbr }}</small>
+                        {% endif %}
+
+                        {% if form.description.errors %}
+                            {% render_field form.description class+="form-control is-invalid mt-5" placeholder="Description" %}
+                        {% else %}
+                            {% render_field form.description class+="form-control mt-5" placeholder="Description" %}
+                        {% endif %}
+                        <div class="invalid-feedback">
+                            {{ form.description.errors }}
+                        </div>
+                        {% if form.description.help_text %}
+                            <small class="form-text">{{ form.description.help_text|linebreaksbr }}</small>
+                        {% endif %}
+                        <hr />
+                        <div class="form-row card-deck attribute-deck">
+                            {% for attribute in form.attributes %}
+                                <div class="col-sm card card-body attribute-body">
+                                    <div class="form-check">
+                                        <span>{{ attribute.tag }}</span>
+                                        <label class="form-check-label" for="{{ attribute.id_for_label }}">{{ attribute.choice_label }}</label>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        {{ attribute.errors }}
+                                    </div>
+                                    {% if attribute.help_text %}
+                                        <small class="form-text">{{ attribute.help_text|linebreaksbr }}</small>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-primary form-control" type="submit">Save</button>
+                        {# Include the hidden fields #}
+                        {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                        {% endfor %}
+                    </div>
+                    <div class="col-sm-8 mt-3 pl-5">
+                        <div class="form-row">
+                            <div class="col">
+                                {% if form.route.errors %}
+                                    {% render_field form.route class+="form-control is-invalid" %}
+                                {% else %}
+                                    {% render_field form.route class+="form-control" %}
+                                {% endif %}
+                                <div class="invalid-feedback">
+                                    {{ form.route.errors }}
+                                </div>
+                                {% if form.route.help_text %}
+                                    <small class="form-text">{{ form.route.help_text|linebreaksbr }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}}

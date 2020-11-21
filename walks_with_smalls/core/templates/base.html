@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'core/css/main.css' %}" >
+
+    {% block headjs %}
+    {% endblock %}
+
+</head>
+<body>
+    <div class="container-fluid" id="background-image-holder">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="{% url 'index' %}">Walks with Smalls</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'walk-add' %}">Share a Walk<span class="sr-only">(current)</span></a>
+                </li>
+                {% if 'search' in request.session %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'results' %}">Search Results</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <div>Share your local knowledge, and walk more!</div>
+            <ul class="navbar-nav mr-right">
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="nav-link">logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="nav-link">login</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        <form>
+            <input type="number" id="user-latitude" name="user-latitude" hidden />
+            <input type="number" id="user-longitude" name="user-longitude" hidden />
+        </form>
+        <div id="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+    <hr />
+    <div class="row fixed-bottom">
+        <div class="col">
+            <footer class="d-flex justify-content-around align-items-center">
+                &#169; {% now "Y" %} Walks with Smalls
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    {% block endbodyjs %}
+    {% endblock %}
+    <script>
+        // enable tooltips everwhere
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+</body>

@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="location-details small card-body">
+        {% if walk.road %}
+        <p>{{ walk.road }}</p>
+        {% endif %}
+        {% if walk.suburb %}
+        <p>{{ walk.suburb }}</p>
+        {% endif %}
+        {% if walk.city %}
+        <p>{{ walk.city }}</p>
+        {% endif %}
+        {% if walk.county %}
+        <p>{{ walk.county }}</p>
+        {% endif %}
+        {% if walk.country %}
+        <p>{{ walk.country }}</p>
+        {% endif %}
+        {% if walk.postcode %}
+        <p>{{ walk.postcode }}</p>
+        {% endif %}
+    </div>
+    <div class="location-links card-footer">
+        {% include 'walks/fragments/walk_location_links.html' %}
+    </div>
+</div>

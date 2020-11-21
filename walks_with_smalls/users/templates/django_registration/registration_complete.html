@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Registration Complete
+{% endblock %}
+
+{% block content%}
+    <div class="row">
+        <div class="col-sm-10 offset-sm-1 jumbotron jumbotron-fluid mt-5">
+            <div class="container">
+                <h2>Thank you</h2>
+                <h3>You're <a href="{% url 'index' %}">ready to walk</a></h3>
+            </div>
+        </div>
+    </div>
+{% endblock %}

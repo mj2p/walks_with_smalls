@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Walks with Smalls
+{% endblock %}
+
+{% block headjs %}
+    {{ form.media }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div id="intro-blurb" class="col-sm-10 offset-sm-1 mt-5">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col-sm">
+                            <h2>Hello, Thanks for visiting our <span class="walks-with-smalls">Walks with Smalls</span> site.</h2>
+                            <p class="mt-4">The idea is simple. Share your local knowledge, and walk more! </p>
+                            <p>
+                                As parents to three small boys getting out is essential at the best of times, even more so now.
+                                Sometimes we find it hard to recall the beautiful local walks we've been on, or take a punt on a recommendation without a bit more information.
+                            </p>
+                            <p>
+                                Hopefully this site can serve as a repository for sharing walks, and any useful tips to make them a pleasure not a chore.
+                            </p>
+                            <p>This site is a lock-down project. It's not run for profit, just for fun.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-4 offset-sm-2 mb-2">
+            <a href="{% url 'results' %}" class="btn btn-lg btn-block btn-primary walks-with-smalls main-button" role="button">
+                <h1>Find a Walk</h1>
+            </a>
+        </div>
+        <div class="col-sm-4 mb-5">
+            <a href="{% url 'walk-add' %}" class="btn btn-lg btn-block btn-secondary walks-with-smalls main-button" role="button">
+                <h1>Share a walk</h1>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block endbodyjs %}
+    {% include 'walks/fragments/search_form_js.html' %}
+{% endblock %}
+

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Walks
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            {% include 'walks/fragments/search_form.html' %}
+        </div>
+    </div>
+    <hr />
+    <div class="row mb-5">
+        <div class="col text-center">
+            <div class="card-deck walk-deck" id="walks-holder">
+                {% for walk in walks %}
+                    {% include 'walks/fragments/walk.html' %}
+                {% empty %}
+                    <div class="row">
+                        <div class="col-sm-8 offset-sm-"
+                    <h3>No results were found for your search</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block endbodyjs %}
+    {% include 'walks/fragments/search_form_js.html' %}
+{% endblock %}

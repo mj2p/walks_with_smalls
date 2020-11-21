@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-10 offset-sm-1 jumbotron jumbotron-fluid mt-5">
+            <div class="container">
+                <h2>Register</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-sm">
+                            {% if form.username.errors %}
+                                {% render_field form.username class+="form-control is-invalid" placeholder="Username" %}
+                            {% else %}
+                                {% render_field form.username class+="form-control" placeholder="Username" %}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.username.errors }}
+                            </div>
+                            {% if form.username.help_text %}
+                                <small class="form-text">{{ form.username.help_text|linebreaksbr }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm">
+                            {% if form.email.errors %}
+                                {% render_field form.email class+="form-control is-invalid" placeholder="Email Address" %}
+                            {% else %}
+                                {% render_field form.email class+="form-control" placeholder="Email Address" %}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.email.errors }}
+                            </div>
+                            {% if form.email.help_text %}
+                                <small class="form-text">{{ form.email.help_text|linebreaksbr }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-row mt-5">
+                        <div class="col-sm">
+                            {% if form.password.errors %}
+                                {% render_field form.password1 class+="form-control is-invalid" placeholder="Password" %}
+                            {% else %}
+                                {% render_field form.password1 class+="form-control" placeholder="Password" %}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.password1.errors }}
+                            </div>
+                            {% if form.password1.help_text %}
+                                <small class="form-text">{{ form.password1.help_text|linebreaksbr }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="col-sm">
+                            {% if form.password2.errors %}
+                                {% render_field form.password2 class+="form-control is-invalid" placeholder="Confirm Password" %}
+                            {% else %}
+                                {% render_field form.password2 class+="form-control" placeholder="Confirm Password" %}
+                            {% endif %}
+                            <div class="invalid-feedback">
+                                {{ form.password2.errors }}
+                            </div>
+                            {% if form.password2.help_text %}
+                                <small class="form-text">{{ form.password2.help_text|linebreaksbr }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-row mt-2">
+                        <div class="col-sm">
+                            <button class="btn btn-lg btn-primary" type="submit">Register</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

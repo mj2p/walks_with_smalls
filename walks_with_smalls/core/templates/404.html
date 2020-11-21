@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Page not Found - 404
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-10 offset-sm-1 jumbotron jumbotron-fluid mt-5">
+            <div class="container">
+                <h1>Sorry, we couldn't find that page</h1>
+                <h2>Click <a href="{% url 'index' %}">here</a> to return to the front page</h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}

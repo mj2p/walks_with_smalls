@@ -1,0 +1,52 @@
+{% load i18n l10n %}
+<style type="text/css">
+	{% block map_css %}
+		{% get_current_language_bidi as LANGUAGE_BIDI %}
+    	{% if not display_raw %}#{{ id }} { display: none; }{% endif %}
+    {% endblock %}
+</style>
+
+<div class="row">
+	<div class="col">
+		<div id="{{ id }}_div_map">
+			<div id="{{ id }}_map" class="map-widget"></div>
+			{% if not disabled %}
+				<div class="text-right">
+					<span class="clear_features">
+						<a class="btn btn-danger mt-1" href="javascript:{{ module }}.clearFeatures()">
+							{% translate "Delete all Features" %}
+						</a>
+					</span>
+				</div>
+			{% endif %}
+			{% if display_raw %}
+				<p>{% translate "Debugging window (serialized value)" %}</p>
+			{% endif %}
+			<textarea id="{{ id }}" class="vSerializedField required" cols="150" rows="10" name="{{ name }}">{{ serialized }}</textarea>
+			<script>
+				{% block map_options %}
+					var map_options = {};
+				{% endblock %}
+				{% block base_layer %}
+					var base_layer = new ol.layer.Tile({source: new ol.source.OSM()});
+				{% endblock %}
+				{% block options %}
+					var options = {
+						base_layer: base_layer,
+						geom_name: '{{ geom_type }}',
+						id: '{{ id }}',
+						map_id: '{{ id }}_map',
+						map_options: map_options,
+						map_srid: {{ map_srid|unlocalize }},
+						name: '{{ name }}',
+						default_lon: {{ default_lon|unlocalize }},
+						default_lat: {{ default_lat|unlocalize }},
+						default_zoom: {{ default_zoom|unlocalize }},
+						modifiable: {{ modifiable|yesno:"true,false" }}
+					};
+				{% endblock %}
+				var {{ module }} = new MapWidget(options);
+			</script>
+		</div>
+	</div>
+</div>
