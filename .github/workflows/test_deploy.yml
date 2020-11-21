@@ -117,3 +117,5 @@ jobs:
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web
             # migrate the database
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml run --rm web pipenv run python walks_with_smalls/manage.py migrate
+            # run collectstatic
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml run --rm web pipenv run python walks_with_smalls/manage.py collectstatic
