@@ -17,5 +17,5 @@ omit =
 
 
 [report]
-fail_under = 16
+fail_under = 1
 show_missing = True
