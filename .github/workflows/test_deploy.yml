@@ -1,0 +1,71 @@
+name: test_deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint_test_deploy:
+    name: lint then test then deploy
+    runs-on: ubuntu-20.04
+
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgis:
+        # Docker Hub image
+        image: postgis/postgis
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: install pipenv
+        uses: dschep/install-pipenv-action@v1
+
+      - name: Install dependencies
+        run: |
+          pipenv sync --dev
+
+      - name: Run pre-commit
+        run: |
+          pipenv run pre-commit run -a --verbose
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: user/app:latest
+          target: prod
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}

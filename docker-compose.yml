@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgis/postgis
+
+  web:
+    command: /bin/bash -c "pipenv run gunicorn core.wsgi"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - PYTHONPATH=walks_with_smalls

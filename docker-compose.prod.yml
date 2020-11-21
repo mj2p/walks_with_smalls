@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  db:
+    env_file:
+      - .config/.env.prod
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    image: woolysammoth/walks_with_smalls:prod
+    restart: always
+    env_file:
+      - .config/.env.prod

@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+psycopg2-binary = "*"
+social-auth-app-django = "*"
+opencage = "*"
+django-widget-tweaks = "*"
+gunicorn = "*"
+django-storages = "*"
+boto3 = "*"
+django-registration = "*"
+
+[dev-packages]
+pytest-django = "*"
+black = "==20.8b1"
+flake8 = "*"
+isort = "*"
+pre-commit = "*"
+autopep8 = "*"
+coverage = "*"
+django-coverage-plugin = "*"
+docker-compose = "*"
+
+[requires]
+python_version = "3.8"

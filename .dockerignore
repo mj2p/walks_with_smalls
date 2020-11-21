@@ -1,0 +1,8 @@
+Dockerfile*
+docker-compose*
+.config
+.pytest_cache
+.pre-commit-config.yaml
+.coverage
+.git
+.gitignore

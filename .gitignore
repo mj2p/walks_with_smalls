@@ -1,0 +1,8 @@
+.idea
+.config
+local_settings.py
+.pytest_cache
+.coverage
+walks_with_smalls/core/static
+scripts
+__pycache__

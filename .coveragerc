@@ -1,0 +1,21 @@
+[run]
+branch = True
+command_line = -m pytest -vvvv
+source =
+    walks_with_smalls
+    places
+    users
+omit =
+    */.local/*
+    */tests/*
+    */migrations/*
+    */wsgi.py
+    */asgi.py
+    */settings.py
+    */local_settings.py
+    */apps.py
+
+
+[report]
+fail_under = 16
+show_missing = True
