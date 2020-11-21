@@ -112,5 +112,5 @@ jobs:
           script_stop: true
           script: |
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web
-            docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web
 
