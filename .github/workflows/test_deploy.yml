@@ -91,3 +91,19 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Set up SSH Agent
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          # this assumes that .config/.env.prod is already on the server
+          # copy compose files
+          scp docker-compose.yml ${{ DOCKER_HOST }}:${{ DOCKER_HOST_PATH }}
+          scp docker-compose.prod.yml ${{ DOCKER_HOST }}:${{ DOCKER_HOST_PATH }}
+          # run commands to pull and restart the web container
+          ssh -t ${{ DOCKER_HOST }} "docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web"
+          ssh -t ${{ DOCKER_HOST }} "docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web"
+
