@@ -92,18 +92,25 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-      - name: Set up SSH Agent
-        uses: webfactory/ssh-agent@v0.4.1
+      - name: copy docker-compose files via ssh
+        uses: appleboy/scp-action@master
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.DOCKER_HOST }}
+          username: ${{ secrets.DOCKER_HOST_USER }}
+          key: ${{ Ssecrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          source: "docker-compose.yml,docker-compose.prod.yml"
+          target: "."
 
-      - name: Deploy to Server
-        run: |
-          # this assumes that .config/.env.prod is already on the server
-          # copy compose files
-          scp docker-compose.yml ${{ secrets.DOCKER_HOST }}:${{ secrets.DOCKER_HOST_PATH }}
-          scp docker-compose.prod.yml ${{ secrets.DOCKER_HOST }}:${{ secrets.DOCKER_HOST_PATH }}
-          # run commands to pull and restart the web container
-          ssh -t ${{ secrets.DOCKER_HOST }} "docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web"
-          ssh -t ${{ secrets.DOCKER_HOST }} "docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web"
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DOCKER_HOST }}
+          username: ${{ secrets.DOCKER_HOST_USER }}
+          key: ${{ Ssecrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script_stop: true
+          script: |
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web
+            docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web
 
