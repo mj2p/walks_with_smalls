@@ -19,8 +19,12 @@
                     {% include 'walks/fragments/walk.html' %}
                 {% empty %}
                     <div class="row">
-                        <div class="col-sm-8 offset-sm-"
-                    <h3>No results were found for your search</h3>
+                        <div class="col-sm-8 offset-sm-2 jumbotron jumbotron-fluid">
+                            <div class="container text-center">
+                                <h3>No results were found for your search</h3>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
