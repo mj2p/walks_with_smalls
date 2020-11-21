@@ -97,7 +97,7 @@ jobs:
         with:
           host: ${{ secrets.DOCKER_HOST }}
           username: ${{ secrets.DOCKER_HOST_USER }}
-          key: ${{ Ssecrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           source: "docker-compose.yml,docker-compose.prod.yml"
           target: "."
@@ -107,7 +107,7 @@ jobs:
         with:
           host: ${{ secrets.DOCKER_HOST }}
           username: ${{ secrets.DOCKER_HOST_USER }}
-          key: ${{ Ssecrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script_stop: true
           script: |
