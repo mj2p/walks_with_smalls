@@ -6,3 +6,4 @@ docker-compose*
 .coverage
 .git
 .gitignore
+__pycache__
