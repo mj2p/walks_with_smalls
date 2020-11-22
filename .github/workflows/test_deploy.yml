@@ -114,7 +114,7 @@ jobs:
             # login to dockerhub
             echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
             # pull the new container
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull web
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml pull -q web
             # reload the app
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --no-build --force-recreate web
             # migrate the database
