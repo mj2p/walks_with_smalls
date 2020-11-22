@@ -24,6 +24,8 @@ autopep8 = "*"
 coverage = "*"
 django-coverage-plugin = "*"
 docker-compose = "*"
+faker = "*"
+pytest-helpers-namespace = "*"
 
 [requires]
 python_version = "3.8"

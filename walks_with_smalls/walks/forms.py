@@ -84,8 +84,6 @@ class WalkForm(forms.ModelForm):
         if "route" not in self.cleaned_data:
             raise forms.ValidationError("Please enter the walk route using the map")
 
-        self.cleaned_data["slug"] = slugify(self.cleaned_data["name"])
-
         return self.cleaned_data
 
     class Meta:

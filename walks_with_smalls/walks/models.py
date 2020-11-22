@@ -69,6 +69,9 @@ class Walk(models.Model):
 
     attributes = models.ManyToManyField(Attribute, blank=True)
 
+    class Meta:
+        unique_together = ("name", "submitter")
+
     def get_absolute_url(self):
         return reverse(
             "walk-detail",
@@ -79,9 +82,7 @@ class Walk(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        initial_start = self.start
         self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
 
         # Check if the start location has changed
         start_location_changed = False
@@ -90,7 +91,7 @@ class Walk(models.Model):
             self.start = self.calculate_walk_start()
             start_location_changed = True
 
-        if self.start != initial_start:
+        if self.start != self.calculate_walk_start():
             start_location_changed = True
 
         # check if the cache_has expired
@@ -130,7 +131,6 @@ class Walk(models.Model):
                         self.formatted = results[0].get("formatted")
 
                         self.reverse_geocode_cache_time = now()
-                        super().save(*args, **kwargs)
 
                 except RateLimitExceededError as e:
                     print(e)
