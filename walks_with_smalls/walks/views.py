@@ -152,23 +152,27 @@ class Results(ListView):
         )
 
         # we can annotate and filter
-        queryset = (
-            queryset.annotate(distance=Distance("start", search_location))
-            .annotate(
-                attribute_match_count=Count(
-                    "attributes",
-                    filter=Q(attributes__in=search_params.get("attributes", [])),
-                )
+        # fmt: off
+        return queryset.annotate(
+            distance=Distance("start", search_location)
+        ).annotate(
+            attribute_match_count=Count(
+                "attributes",
+                filter=Q(attributes__in=search_params.get("attributes", [])),
             )
-            .filter(
-                start__distance_lte=(
-                    search_location,
-                    D(mi=float(search_params.get("search_radius", 250))),
-                )
+        ).filter(
+            start__distance_lte=(
+                search_location,
+                D(mi=float(search_params.get("search_radius", 250))),
             )
-            .filter(route_length__lte=search_params.get("maximum_length", 500))
-            .order_by("-attribute_match_count", "route_length", "distance",)
+        ).filter(
+            route_length__lte=search_params.get("maximum_length", 500)
+        ).order_by(
+            "-attribute_match_count",
+            "route_length",
+            "distance",
         )
+        # fmt: on
 
         return queryset
 
