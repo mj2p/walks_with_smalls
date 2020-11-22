@@ -6,6 +6,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.timezone import now
 
 from users.models import User
@@ -79,6 +80,7 @@ class Walk(models.Model):
 
     def save(self, *args, **kwargs):
         initial_start = self.start
+        self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
         # Check if the start location has changed
