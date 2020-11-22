@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Underdog&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spartan&family=Underdog&display=swap');
+
+html {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    background-image: url('../../core/images/wenchford_in_may.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: #061a40;
+}
+
+.card-header {
+    background: #75D94B;
+}
+
+.walk-header {
+    color: #061a40;
+}
+
+.walk-header:hover {
+    text-decoration: none
+}
+
+.walk-header a {
+    color: #061a40;
+}
+
+.navbar {
+    font-family: 'Underdog', cursive;
+    color: #ffffff;
+    background-color: #3D5F00;
+}
+
+.navbar-nav li a {
+    color: #cdca51;
+}
+
+.navbar-nav li a:hover {
+    color: #c0fa75;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    color: #cdca51;
+}
+
+.navbar-brand:hover {
+    color: #c0fa75;
+}
+
+#intro-blurb {
+    color: white;
+    font-weight: 900;
+}
+
+.walks-with-smalls {
+    font-family: 'Underdog', cursive;
+}
+
+.jumbotron {
+    background-color: #3D5F00;
+    color: white;
+}
+
+#main-brand {
+    font-family: 'Underdog', cursive;
+}
+
+#content {
+    font-family: 'Spartan', sans-serif;
+}
+
+#welcome-text {
+    position: relative;
+    overflow: hidden;
+    background-color: #3D5F00;
+    color: white;
+}
+
+#welcome-text h1 {
+    font-size: 4.5rem;
+}
+
+#welcome-text container {
+    padding: 100px;
+    position: relative;
+    z-index: 2;
+}
+
+#welcome-text img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+#search-form-header {
+    background-color: #f7b32b;
+    border: 1px solid #061a40;
+}
+
+.list-walk {
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-radius: 5px 5px 0 0;
+}
+
+.list-walk-footer {
+    border-bottom: 2px solid black;
+}
+
+.walk-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: .5rem;
+}
+
+.attribute {
+    border: 1px solid #f7b32b;
+    color: #061a40;
+}
+
+.form-container {
+    background-color: #3D5F00;
+    color: white;
+}
+
+.w3w-slashes {
+    color: #e11f26;
+    font-weight: 900;
+    font-size: 80%;
+}
+
+.map-widget {
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.carousel {
+    height: 250px;
+    max-height: 250px;
+    min-height: 250px;
+}
+
+.carousel-image {
+    height: 100%;
+    width: auto;
+}
+
+.attribute-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-gap: .5rem;
+}
+
+.attribute-body {
+    border: none;
+    background: none;
+}
+
+.btn-primary {
+    color: #efefef;
+    background-color: #061a40;
+}
+
+.btn-primary:hover {
+    color: #061a40;
+    border-color: #061a40;
+}
+
+.main-button {
+    background-color: #3D5F00;
+    border-color: #061a40;
+    color: #cdca51;
+}
+
+.main-button:hover {
+    background-color: #061a40;
+    border-color: #3D5F00;
+    color: #cdca51;
+}
+
+footer {
+    font-family: 'Underdog', cursive;
+    min-height: 50px;
+    background-color: #061a40;
+    color: #c0fa75;
+}
