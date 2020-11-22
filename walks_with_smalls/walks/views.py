@@ -151,8 +151,6 @@ class Results(ListView):
             y=float(search_params.get("lat")),
         )
 
-        print(queryset)
-
         # we can annotate and filter
         queryset = (
             queryset.annotate(distance=Distance("start", search_location))
@@ -165,14 +163,12 @@ class Results(ListView):
             .filter(
                 start__distance_lte=(
                     search_location,
-                    D(mi=float(search_params.get("search_radius"))),
+                    D(mi=float(search_params.get("search_radius", 250))),
                 )
             )
             .filter(route_length__lte=search_params.get("maximum_length", 500))
             .order_by("-attribute_match_count", "route_length", "distance",)
         )
-
-        print([w.distance for w in queryset])
 
         return queryset
 
