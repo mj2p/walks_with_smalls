@@ -151,6 +151,11 @@ class Results(ListView):
             y=float(search_params.get("lat")),
         )
 
+        # get the search_parameters
+        search_attributes = search_params.get("attributes", [])
+        search_radius = search_params.get("search_radius") or 200
+        maximum_length = search_params.get("maximum_length") or 250
+
         # we can annotate and filter
         # fmt: off
         return queryset.annotate(
@@ -158,23 +163,21 @@ class Results(ListView):
         ).annotate(
             attribute_match_count=Count(
                 "attributes",
-                filter=Q(attributes__in=search_params.get("attributes", [])),
+                filter=Q(attributes__in=search_attributes),
             )
         ).filter(
             start__distance_lte=(
                 search_location,
-                D(mi=float(search_params.get("search_radius", 250))),
+                D(mi=float(search_radius)),
             )
         ).filter(
-            route_length__lte=search_params.get("maximum_length", 500)
+            route_length__lte=float(maximum_length)
         ).order_by(
             "-attribute_match_count",
             "route_length",
             "distance",
         )
         # fmt: on
-
-        return queryset
 
 
 @method_decorator(csrf_exempt, name="dispatch")
