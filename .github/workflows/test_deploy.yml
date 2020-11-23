@@ -9,27 +9,6 @@ jobs:
   lint_test_deploy:
     name: lint then test then deploy
     runs-on: ubuntu-20.04
-
-    # Service containers to run with `container-job`
-    services:
-      # Label used to access the service container
-      postgis:
-        # Docker Hub image
-        image: postgis/postgis
-        # Provide the password for postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: github_actions
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
       - name: checkout
         uses: actions/checkout@v2
@@ -57,15 +36,20 @@ jobs:
         run: |
           pipenv run pre-commit run -a --verbose
 
+      - name: Create env file
+        run: |
+          mkdir -p .config
+          echo "POSTGRES_DB=github_actions
+          POSTGRES_USER=postgres
+          POSTGRES_PASSWORD=postgres
+          POSTGRES_HOST=db" > .config/.env.dev
+
       - name: run tests under coverage
         run: |
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up db
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage run
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage xml
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: github_actions
           PYTHONPATH: walks_with_smalls
 
       - name: upload coverage report to codecov
