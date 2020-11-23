@@ -3,7 +3,7 @@
 
 ---
 ![test_deploy](https://github.com/mj2p/walks_with_smalls/workflows/test_deploy/badge.svg)
-
+[![codecov](https://codecov.io/gh/mj2p/walks_with_smalls/branch/master/graph/badge.svg)](https://codecov.io/gh/mj2p/walks_with_smalls)
 ---
 
 **Walks with Smalls** is a site for sharing information about child friendly walks.
