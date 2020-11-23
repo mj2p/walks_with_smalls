@@ -63,10 +63,15 @@ jobs:
 
       - name: run tests under coverage
         run: |
-          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
-          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml restart -d
+          # spin up the db container
+          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d db
+          # allow db init to take place
+          sleep 10
+          # run tests under coverage
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage run
+          # generate xml report
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage xml
+          # tear down
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v
 
       - name: upload coverage report to codecov
