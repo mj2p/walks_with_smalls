@@ -44,6 +44,23 @@ jobs:
           POSTGRES_PASSWORD=postgres
           POSTGRES_HOST=db" > .config/.env.dev
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push prod image
+        id: docker_build_base
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: woolysammoth/walks_with_smalls:base
+          target: base
+
       - name: run tests under coverage
         run: |
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
@@ -51,24 +68,10 @@ jobs:
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage xml
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v
 
-      - name: Docker cache
-        uses: satackey/action-docker-layer-caching@v0.0.8
-        # Ignore the failure of a step and avoid terminating the job.
-        continue-on-error: true
-
       - name: upload coverage report to codecov
         uses: codecov/codecov-action@v1
         with:
           file: ./coverage.xml
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push prod image
         id: docker_build_prod
@@ -80,6 +83,11 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build_prod.outputs.digest }}
+
+      - name: Docker cache
+        uses: satackey/action-docker-layer-caching@v0.0.8
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
 
       - name: copy docker-compose files via ssh
         uses: appleboy/scp-action@master
