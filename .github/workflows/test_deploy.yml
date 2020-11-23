@@ -34,6 +34,18 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
+#      - id: cache-apt
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.local/share/virtualenvs
+#          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+      - name: Install geo dependencies
+#        if: steps.cache-apt.outputs.cache-hit != 'true'
+        run: |
+          sudo apt update
+          sudo apt install gdal-bin libgdal-dev python3-gdal binutils libproj-dev gettext-base
+
       - name: Set up Python 3.8
         uses: actions/setup-python@v1
         with:
