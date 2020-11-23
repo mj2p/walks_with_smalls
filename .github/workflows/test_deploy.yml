@@ -46,9 +46,15 @@ jobs:
 
       - name: run tests under coverage
         run: |
-          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up db
+          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up db -d
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage run
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage xml
+          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml down db
+
+      - name: Docker cache
+        uses: satackey/action-docker-layer-caching@v0.0.8
+        # Ignore the failure of a step and avoid terminating the job.
+        continue-on-error: true
 
       - name: upload coverage report to codecov
         uses: codecov/codecov-action@v1
