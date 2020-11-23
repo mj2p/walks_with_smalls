@@ -165,4 +165,6 @@ REGISTRATION_OPEN = True
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 MESSAGE_TAGS = {messages.ERROR: "danger"}
 
-OPENCAGE_API_KEY = os.environ.get("OPENCAGE_API_KEY", "SET-ME-FOR-LOCATION-LOOKUPS")
+OPENCAGE_API_KEY = os.environ.get(
+    "OPENCAGE_API_KEY"
+)  # set for reverse geo-code lookups

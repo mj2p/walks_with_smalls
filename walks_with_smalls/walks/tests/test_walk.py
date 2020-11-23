@@ -3,7 +3,6 @@ from django.contrib.gis.geos import Point
 from django.contrib.gis.measure import D
 from django.test import TestCase
 from django.utils.text import slugify
-from django.utils.timezone import now
 
 from walks.models import Walk, get_sentinel_user
 
@@ -22,7 +21,6 @@ class TestWalk(TestCase):
             description=self.description,
             submitter=get_sentinel_user(),
             route=self.route,
-            reverse_geocode_cache_time=now(),
         )
 
     def test_walk_length(self):
