@@ -46,10 +46,10 @@ jobs:
 
       - name: run tests under coverage
         run: |
-          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up db -d
+          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage run
           pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml run --rm web pipenv run coverage xml
-          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml down db
+          pipenv run docker-compose -f docker-compose.yml -f docker-compose.dev.yml down -v
 
       - name: Docker cache
         uses: satackey/action-docker-layer-caching@v0.0.8

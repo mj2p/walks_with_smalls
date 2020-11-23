@@ -10,7 +10,7 @@
         </div>
     </a>
     <div class="card-body">
-        <p class="lead text-muted">{{ walk.route_length|floatformat:2 }} mile{{ walk.route_distance|pluralize }}</p>
+        <p class="lead text-muted">{{ walk.route_length|floatformat:2 }} mile{{ walk.route_length|floatformat:2|pluralize }}</p>
         <p class="small">{{ walk.road }}, {{ walk.county }}, {{ walk.postcode }}</p>
         <p class="text-left">
             {{ walk.description|truncatewords:15 }}
