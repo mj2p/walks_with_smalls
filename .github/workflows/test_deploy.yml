@@ -80,6 +80,7 @@ jobs:
           push: true
           tags: woolysammoth/walks_with_smalls:prod
           target: prod
+          file: Dockerfile.prod
 
       - name: Image digest
         run: echo ${{ steps.docker_build_prod.outputs.digest }}

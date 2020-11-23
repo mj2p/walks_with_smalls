@@ -7,7 +7,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       target: dev
     image: walks_with_smalls:dev
     command: /bin/bash -c "pipenv run python walks_with_smalls/manage.py runserver 0.0.0.0:8000"

@@ -26,12 +26,3 @@ RUN apt update; \
     mkdir -p /code
 
 WORKDIR /code
-
-FROM woolysammoth/walks_with_smalls:base AS prod
-COPY ./ /code/
-RUN pipenv sync
-
-FROM woolysammoth/walks_with_smalls:base AS dev
-RUN rm -rf /code/*
-COPY Pipfile Pipfile.lock /code/
-RUN pipenv sync --dev
