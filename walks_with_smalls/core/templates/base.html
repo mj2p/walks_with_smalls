@@ -17,26 +17,30 @@
     <div class="container-fluid" id="background-image-holder">
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="{% url 'index' %}">Walks with Smalls</a>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'walk-add' %}">Share a Walk<span class="sr-only">(current)</span></a>
-                </li>
-                {% if 'search' in request.session %}
+            <div class="navbar-text">Share your local knowledge, and walk more!</div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapse-menu" aria-controls="collapse-menu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="collapse-menu">
+                <ul class="navbar-nav mr-right">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'results' %}">Search Results</a>
+                        <a class="nav-link" href="{% url 'walk-add' %}">Share a Walk<span class="sr-only">(current)</span></a>
                     </li>
-                {% endif %}
-            </ul>
-            <div>Share your local knowledge, and walk more!</div>
-            <ul class="navbar-nav mr-right">
-                <li class="nav-item">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'logout' %}" class="nav-link">logout</a>
-                    {% else %}
-                        <a href="{% url 'login' %}" class="nav-link">login</a>
+                    {% if 'search' in request.session %}
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'results' %}">Search Results</a>
+                        </li>
                     {% endif %}
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="nav-link">logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="nav-link">login</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
         </nav>
         <form>
             <input type="number" id="user-latitude" name="user-latitude" hidden />
