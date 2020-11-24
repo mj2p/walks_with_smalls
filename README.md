@@ -1,10 +1,10 @@
 # Walks with Smalls
 ### Share local knowledge and walk more!
 
----
+
 ![test_deploy](https://github.com/mj2p/walks_with_smalls/workflows/test_deploy/badge.svg)
 [![codecov](https://codecov.io/gh/mj2p/walks_with_smalls/branch/master/graph/badge.svg)](https://codecov.io/gh/mj2p/walks_with_smalls)
----
+
 
 **Walks with Smalls** is a site for sharing information about child friendly walks.
 The aim is to make getting out with small children less of a chore and to share local information of good places to take them.
