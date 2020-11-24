@@ -4,6 +4,10 @@ services:
   db:
     image: postgis/postgis
     container_name: walks_with_smalls_db_1
+    volumes:
+      - type: volume
+        source: pg_data
+        target: /var/lib/postgresql/data
 
   web:
     container_name: walks_with_smalls_web_1
@@ -14,3 +18,6 @@ services:
       - db
     environment:
       - PYTHONPATH=walks_with_smalls
+
+volumes:
+  pg_data:
