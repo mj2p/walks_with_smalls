@@ -8,13 +8,23 @@
         <div class="col-sm">
             <div class="card" id="search-form">
                 <div class="card-header" id="search-form-header">
-                    <div class="row">
+                    <div class="row d-flex justify-content-between align-items-center">
                         <div class="col-sm">
                             <span class="lead">Find a walk</span>
                         </div>
+                        <div class="col-sm text-right">
+                            <a data-toggle="collapse" href="#search-fields" aria-expanded="true" aria-controls="search-fields">
+                                <svg width="2em" height="1.5em" viewBox="0 0 16 16" class="search-show-hide bi bi-caret-down-fill" id="search-show" fill="currentColor" xmlns="http://www.w3.org/2000/svg" display="none">
+                                    <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                </svg>
+                                <svg width="2em" height="1.5em" viewBox="0 0 16 16" class="search-show-hide bi bi-caret-up-fill" id="search-hide" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body collapse show" id="search-fields">
                     <div class="col-sm mb-2">
                         {% include 'walks/fragments/messages.html' %}
                     </div>

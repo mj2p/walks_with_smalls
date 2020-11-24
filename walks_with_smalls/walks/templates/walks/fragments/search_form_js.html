@@ -19,6 +19,17 @@
                 $('#{{ form.postcode.id_for_label }}').prop("disabled", false);
             }
         })
+
+        // change the show/hide caret icon
+        $('#search-fields').on('hide.bs.collapse', function () {
+          $('#search-hide').attr('display', 'none');
+          $('#search-show').attr('display', 'inline');
+        })
+
+        $('#search-fields').on('show.bs.collapse', function () {
+          $('#search-hide').attr('display', 'inline');
+          $('#search-show').attr('display', 'none');
+        })
     });
 
     function submitPosition(position) {
