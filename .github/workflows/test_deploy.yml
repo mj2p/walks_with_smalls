@@ -68,6 +68,8 @@ jobs:
           push: true
           tags: woolysammoth/walks_with_smalls:base
           target: base
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: run tests under coverage
         run: |
@@ -95,6 +97,8 @@ jobs:
           tags: woolysammoth/walks_with_smalls:prod
           target: prod
           file: Dockerfile.prod
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Image digest
         run: echo ${{ steps.docker_build_prod.outputs.digest }}
