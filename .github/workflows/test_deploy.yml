@@ -56,10 +56,10 @@ jobs:
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          path: /tmp/.buildx-cache/base
+          key: ${{ runner.os }}-buildx-base-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-buildx-base-
 
       - name: Build and push base image
         id: docker_build_base
@@ -68,8 +68,8 @@ jobs:
           push: true
           tags: woolysammoth/walks_with_smalls:base
           target: base
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache/base
+          cache-to: type=local,dest=/tmp/.buildx-cache/base
 
       - name: run tests under coverage
         run: |
@@ -89,6 +89,14 @@ jobs:
         with:
           file: ./coverage.xml
 
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache/prod
+          key: ${{ runner.os }}-buildx-prod-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-prod-
+
       - name: Build and push prod image
         id: docker_build_prod
         uses: docker/build-push-action@v2
@@ -97,8 +105,8 @@ jobs:
           tags: woolysammoth/walks_with_smalls:prod
           target: prod
           file: Dockerfile.prod
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
+          cache-from: type=local,src=/tmp/.buildx-cache/prod
+          cache-to: type=local,dest=/tmp/.buildx-cache/prod
 
       - name: Image digest
         run: echo ${{ steps.docker_build_prod.outputs.digest }}
