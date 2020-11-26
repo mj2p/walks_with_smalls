@@ -144,6 +144,7 @@ else:
     AWS_IS_GZIPPED = True
     AWS_S3_REGION_NAME = "eu-west-1"
     AWS_DEFAULT_ACL = "public-read"
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=31536000"}
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "core", "static"),
